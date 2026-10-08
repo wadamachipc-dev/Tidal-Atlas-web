@@ -1,8 +1,11 @@
 'use strict';
 (() => {
+  const english = document.documentElement.lang === 'en';
+  const tr = (ja, en) => english ? en : ja;
+  const assetRoot = english ? '../' : '';
   const config = window.TIDAL_ATLAS_CONFIG || {};
   if (config.publisher) document.querySelectorAll('[data-publisher]').forEach(el => { el.textContent = config.publisher; });
-  if (config.releaseText) document.querySelectorAll('[data-release]').forEach(el => { el.textContent = config.releaseText; });
+  if (english ? config.releaseTextEn : config.releaseText) document.querySelectorAll('[data-release]').forEach(el => { el.textContent = english ? config.releaseTextEn : config.releaseText; });
   if (config.copyrightYear) document.getElementById('copyright-year').textContent = config.copyrightYear;
   const publisherLinks = document.getElementById('publisher-links');
   const addLink = (label, href, external) => {
@@ -11,23 +14,23 @@
     publisherLinks.append(link); publisherLinks.hidden = false;
   };
   const validUrl = value => { try { return ['https:', 'http:'].includes(new URL(value).protocol); } catch { return false; } };
-  if (config.companyUrl && validUrl(config.companyUrl)) addLink('企業サイト', config.companyUrl, true);
-  if (config.officialXUrl && validUrl(config.officialXUrl)) addLink('公式X', config.officialXUrl, true);
-  if (config.contactEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(config.contactEmail)) addLink('お問い合わせ', 'mailto:' + config.contactEmail, false);
+  if (config.companyUrl && validUrl(config.companyUrl)) addLink(tr("企業サイト", "Company website"), config.companyUrl, true);
+  if (config.officialXUrl && validUrl(config.officialXUrl)) addLink(tr("公式X", "Official X"), config.officialXUrl, true);
+  if (config.contactEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(config.contactEmail)) addLink(tr("お問い合わせ", "Contact"), 'mailto:' + config.contactEmail, false);
   const menuToggle = document.querySelector('.menu-toggle');
   const navigation = document.getElementById('main-navigation');
-  function closeMenu() { menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'メニューを開く'); navigation.classList.remove('open'); }
-  menuToggle.addEventListener('click', () => { const open = menuToggle.getAttribute('aria-expanded') !== 'true'; menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く'); navigation.classList.toggle('open', open); });
+  function closeMenu() { menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', tr("メニューを開く", "Open menu")); navigation.classList.remove('open'); }
+  menuToggle.addEventListener('click', () => { const open = menuToggle.getAttribute('aria-expanded') !== 'true'; menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? tr("メニューを閉じる", "Close menu") : tr("メニューを開く", "Open menu")); navigation.classList.toggle('open', open); });
   navigation.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   const desktopQuery = window.matchMedia('(min-width: 761px)');
   desktopQuery.addEventListener('change', event => { if (event.matches) closeMenu(); });
   const shots = [
-    { src: 'assets/shore.webp', caption: '岩場と潮だまりの広がる海辺' },
-    { src: 'assets/seagrass.webp', caption: '海面の下に広がるアマモ場' },
-    { src: 'assets/school.webp', caption: '水中を泳ぐ、小さな魚の群れ' },
-    { src: 'assets/fish.webp', caption: '一匹ずつ、姿や模様をじっくり観察' },
-    { src: 'assets/aquarium.webp', caption: '採集した生き物を迎える、自分の水槽' }
+    { src: assetRoot + 'assets/shore.webp', caption: tr("岩場と潮だまりの広がる海辺", "A rocky shoreline dotted with tidal pools") },
+    { src: assetRoot + 'assets/seagrass.webp', caption: tr("海面の下に広がるアマモ場", "A seagrass meadow beneath the surface") },
+    { src: assetRoot + 'assets/school.webp', caption: tr("水中を泳ぐ、小さな魚の群れ", "A school of small fish swimming underwater") },
+    { src: assetRoot + 'assets/fish.webp', caption: tr("一匹ずつ、姿や模様をじっくり観察", "Take a closer look at each creature and its markings") },
+    { src: assetRoot + 'assets/aquarium.webp', caption: tr("採集した生き物を迎える、自分の水槽", "Your own aquarium for the wildlife you collect") }
   ];
   let selected = 0;
   const stage = document.getElementById('gallery-image');
