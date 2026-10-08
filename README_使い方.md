@@ -55,3 +55,13 @@ Cloudflareアカウントへのログインが必要です。
 外部フォント・外部JavaScript・アクセス解析・Cookie・問い合わせフォームは使用していません。
 問い合わせ先を設定するとメールソフトが開くリンクになります。サイトがメールを直接送信する機能ではありません。
 デスクトップ・タブレット・スマートフォンの画面幅に対応するCSSと、キーボード操作・動きを抑える設定への配慮を含みます。
+
+
+## 日本語・英語の切り替え
+- 上部の「日本語 / EN」で切り替えます。日本語は public/index.html、英語は public/en/index.html です。
+- 英語URL：https://tidal-atlas.higataproject.com/en/
+- 英語ページも実ファイルのため、JavaScriptなしでも本文を読めます。
+- 公開予定の変更は site-config.js の releaseText（日本語）と releaseTextEn（英語）を両方更新し、各HTMLの公開日・FAQも更新してください。
+- GitHubへ更新する場合は public フォルダ全体を既存の public に上書きします。en フォルダも追加してください。
+- Cloudflare Pagesへ直接アップロードする場合も public 全体をアップロードします。
+- canonical・hreflangは現在の公開ドメインを設定済みです。ドメインを変える場合は両方のHTMLの head 内を更新してください。

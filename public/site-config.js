@@ -2,6 +2,7 @@
 window.TIDAL_ATLAS_CONFIG = Object.freeze({
   publisher: 'Higata Project',
   releaseText: '2026年11月 公開予定',
+  releaseTextEn: 'Planned release: November 2026',
   copyrightYear: '2026',
   // 実際のURL・メールアドレスを入力すると、開発元の欄にリンクが表示されます。
   companyUrl: '',
